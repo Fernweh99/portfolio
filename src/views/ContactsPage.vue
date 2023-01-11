@@ -66,31 +66,34 @@
               <div class="col-12">
                 <h4 class="mb-3">Contact Form</h4>
               </div>
+              <div>
+                <span>{{ messageModal }}</span>
+              </div>
               <div class="col-6">
-                <p class="label">What is your name?</p>
+                <p class="label"><span class="text-danger">* </span>What is your name?</p>
                 <div class="input-group">
                   <span class="input-group-text"><i class="fa-solid fa-signature"></i></span>
-                  <input type="" id="name" :name="name" class="form-control" placeholder="es: Mario">
+                  <input type="text" id="name" v-model="form.name" class="form-control" placeholder="es: Mario">
                 </div>
 
                 <p class="label"><span class="text-danger">* </span>And your email?</p>
                 <div class="input-group">
                   <span class="input-group-text"><i class="fa-regular fa-envelope"></i></span>
-                  <input type="text" aria-label="First name" placeholder="mario@example.com" class="form-control">
+                  <input type="email" v-model="form.email" placeholder="mario@example.com" class="form-control">
                 </div>
               </div>
               <div class="col-6">
                 <p class="label"><span class="text-danger">* </span>Write me here..</p>
-                <textarea class="form-control message" id="exampleFormControlTextarea1" placeholder="Right there!" rows="5"></textarea>
+                <textarea class="form-control message" v-model="form.message" id="exampleFormControlTextarea1" placeholder="Right there!" rows="5"></textarea>
               </div>
               <div class="col-12">
-                <p class="label">..About?</p>
+                <p class="label"><span class="text-danger">* </span>..About?</p>
                 <div class="abouts-container">
                   <div 
                     v-for="about in abouts"
                     :key="about"
                     @click="activeAbtBox(about)"
-                    :class="about == aboutQuery ? 'active' : ''"
+                    :class="about == form.aboutQuery ? 'active' : ''"
                     class="about-box">
 
                     <span>{{about}}</span>
@@ -98,7 +101,7 @@
                 </div>
               </div>
             </div>
-            <div class="send-email">
+            <div @click="sendEmail" class="send-email">
               <span>Send <i class="fa-solid fa-paper-plane"></i></span>
             </div>
           </div>
@@ -109,6 +112,7 @@
 </template>
 
 <script>
+import emailjs from '@emailjs/browser';
 export default {
   name: 'ContactsPage',
   data() {
@@ -130,19 +134,16 @@ export default {
       abouts: [
         'Job', 'Collaboration', 'More info', 'just talk'
       ],
-      addressCards: [
-        {
-          title: 'My native home',
-        },
-        {
-          title: 'My current home',
-        },
-        {
-          title: 'My next home',
-        },
-      ],
-      aboutQuery: '',
       activeName: 'contacts',
+      loadingEmail: false,
+      openModal: false,
+      messageModal: '',
+      form: {
+        name: '',
+        email: '',
+        message: '',
+        aboutQuery: '',
+      }
     }
   },
   methods: {
@@ -154,7 +155,27 @@ export default {
       this.activeName = currentBox.uniqueName;
     },
     activeAbtBox(newQuery) {
-      this.aboutQuery = newQuery;
+      this.form.aboutQuery = newQuery;
+    },
+    errorEmail() {
+      console.log('Tutti i parametri sono richiesti!')
+    },
+    sendEmail() {
+      this.loadingEmail = true
+      if (!this.form.email || !this.form.name || !this.form.message || !this.form.aboutQuery) {
+        this.loadingEmail = false
+        this.errorEmail();
+      }
+      else {
+        emailjs.send('service_l6wef4o', 'template_gpprqqk', this.form, '3FSwyc4R_ZRfDpgiQ')
+        .then(() => {
+          this.loadingEmail = false;
+          this.messageModal = "Messaggio inviato con successo!"
+        }, () => {
+          this.loadingEmail = false;
+          this.messageModal = "Ops.. Qualcosa è andato storto, riprova più tardi"
+        });
+      }
     }
   }
 }
