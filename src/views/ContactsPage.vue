@@ -64,10 +64,10 @@
           <div v-show="activeName == 'email'" class="form-email">
             <div class="row">
               <div class="col-12">
-                <h4 class="mb-3">Contact Form</h4>
+                <h4 class="mb-1">Contact form</h4>
               </div>
-              <div>
-                <span>{{ messageModal }}</span>
+              <div v-if="messageModal" :class="successEmail == true ? 'alert-success' : 'alert-danger'" class="alert p-2 mt-0 mb-1 mx-1 col-12" role="alert">
+                {{ messageModal }}
               </div>
               <div class="col-6">
                 <p class="label"><span class="text-danger">* </span>What is your name?</p>
@@ -104,6 +104,7 @@
             <div @click="sendEmail" class="send-email">
               <span>Send <i class="fa-solid fa-paper-plane"></i></span>
             </div>
+            <Loader v-if="loadingEmail"/>
           </div>
         </div>
       </div>
@@ -113,7 +114,9 @@
 
 <script>
 import emailjs from '@emailjs/browser';
+import Loader from '@/components/Loader.vue';
 export default {
+  components: { Loader },
   name: 'ContactsPage',
   data() {
     return {
@@ -138,6 +141,7 @@ export default {
       loadingEmail: false,
       openModal: false,
       messageModal: '',
+      successEmail: false,
       form: {
         name: '',
         email: '',
@@ -157,22 +161,45 @@ export default {
     activeAbtBox(newQuery) {
       this.form.aboutQuery = newQuery;
     },
-    errorEmail() {
-      console.log('Tutti i parametri sono richiesti!')
+    errorForm() {
+      this.loadingEmail = false;
+      this.successEmail = false;
+      this.messageModal = 'Tutti i parametri sono richiesti!';
+    },
+    resetForm() {
+      this.form.email = "";
+      this.form.name = "";
+      this.form.message = "";
+      this.form.aboutQuery = "";
+    },
+    validEmail(email) {
+      const validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+      if (validRegex.test(email)) {
+        return true;
+      } else {
+        return false;
+      }
     },
     sendEmail() {
       this.loadingEmail = true
       if (!this.form.email || !this.form.name || !this.form.message || !this.form.aboutQuery) {
-        this.loadingEmail = false
-        this.errorEmail();
+        this.errorForm();
+      }
+      else if (!this.validEmail(this.form.email)) {
+        this.loadingEmail = false;
+        this.successEmail = false;
+        this.messageModal = 'Inserisci una email valida!';
       }
       else {
         emailjs.send('service_l6wef4o', 'template_gpprqqk', this.form, '3FSwyc4R_ZRfDpgiQ')
         .then(() => {
           this.loadingEmail = false;
+          this.successEmail = true;
           this.messageModal = "Messaggio inviato con successo!"
+
         }, () => {
           this.loadingEmail = false;
+          this.successEmail = false;
           this.messageModal = "Ops.. Qualcosa è andato storto, riprova più tardi"
         });
       }
