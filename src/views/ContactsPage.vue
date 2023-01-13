@@ -164,7 +164,7 @@ export default {
     errorForm() {
       this.loadingEmail = false;
       this.successEmail = false;
-      this.messageModal = 'Tutti i parametri sono richiesti!';
+      this.messageModal = 'All params are require!';
     },
     resetForm() {
       this.form.email = "";
@@ -188,19 +188,19 @@ export default {
       else if (!this.validEmail(this.form.email)) {
         this.loadingEmail = false;
         this.successEmail = false;
-        this.messageModal = 'Inserisci una email valida!';
+        this.messageModal = 'Enter a valid email!';
       }
       else {
         emailjs.send('service_l6wef4o', 'template_gpprqqk', this.form, '3FSwyc4R_ZRfDpgiQ')
         .then(() => {
           this.loadingEmail = false;
           this.successEmail = true;
-          this.messageModal = "Messaggio inviato con successo!"
+          this.messageModal = "Message sent!"
 
         }, () => {
           this.loadingEmail = false;
           this.successEmail = false;
-          this.messageModal = "Ops.. Qualcosa è andato storto, riprova più tardi"
+          this.messageModal = "Ops.. something went wrong, retry later"
         });
       }
     }
