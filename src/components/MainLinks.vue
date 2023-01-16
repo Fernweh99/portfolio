@@ -28,11 +28,14 @@ export default {
 <style lang="scss">
   @import "../assets/scss";
   #main-links {
-      position: fixed;
+      position: absolute;
       top: 0;
       left: 0;
       bottom: 0;
       width: 300px;
+      height: 100%;
+      max-height: 100%;
+      overflow: hidden;
       flex-basis: 300px;
       flex-shrink: 0;
       background-color: rgb(52, 49, 49);

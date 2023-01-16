@@ -69,7 +69,7 @@
               <div v-if="messageModal" :class="successEmail == true ? 'alert-success' : 'alert-danger'" class="alert p-2 mt-0 mb-1 mx-1 col-12" role="alert">
                 {{ messageModal }}
               </div>
-              <div class="col-6">
+              <div class="col-12 col-md-6">
                 <p class="label"><span class="text-danger">* </span>What is your name?</p>
                 <div class="input-group">
                   <span class="input-group-text"><i class="fa-solid fa-signature"></i></span>
@@ -82,7 +82,7 @@
                   <input type="email" v-model="form.email" placeholder="mario@example.com" class="form-control">
                 </div>
               </div>
-              <div class="col-6">
+              <div class="col-12 col-md-6">
                 <p class="label"><span class="text-danger">* </span>Write me here..</p>
                 <textarea class="form-control message" v-model="form.message" id="exampleFormControlTextarea1" placeholder="Right there!" rows="5"></textarea>
               </div>
@@ -211,6 +211,8 @@ export default {
 <style lang="scss" scoped>
   @import "../assets/scss";
 #contacts {
+  overflow: scroll;
+  height: 100%;
   width: 100%;
   .container {
     padding-top: 80px;
@@ -242,7 +244,8 @@ export default {
     }
     // Main Content
     .content-main{
-      height: 400px;
+      margin-bottom: 35px;
+      min-height: 400px;
       background-color: white;
       border-radius: 0 0 15px 15px;
       width: 100%;
@@ -283,8 +286,8 @@ export default {
       }
       // Form email
       .form-email {
+        min-height: 400px;
         position: relative;
-        height: 100%;
         .label {
           margin: 0;
           margin-bottom: 5px;

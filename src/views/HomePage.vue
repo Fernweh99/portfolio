@@ -1,6 +1,6 @@
 <template>
  <div id="home">
-   <div class="container-fluid content">
+   <div class="container content">
      <div class="row">
       <div class="col-12 col-md-4 d-flex justify-content-center">
         <img :src="require('../assets/img/foto_2.jpg')" alt="" class="image">
@@ -12,10 +12,10 @@
     </div>
      <div class="line"></div>
      <div class="row">
-       <div class="col-9">
+       <div class="col-12 col-md-9">
          <h2 class="display-1 job">Jr. Full Stack Developer</h2>
         </div>
-       <div class="col-3 ref-links">
+       <div class="col-12 col-md-3 ref-links mb-4">
          <a href="https://www.linkedin.com/in/daniele-di-mento-987736232/" target="_blank">
            <i class="fa-brands fa-linkedin"></i>
           </a>
@@ -40,6 +40,8 @@ export default {
 <style lang="scss">
   @import "../assets/scss";
   #home {
+    overflow: scroll;
+    height: 100%;
     width: 100%;
     .content{
       display: flex;

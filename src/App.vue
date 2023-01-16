@@ -65,6 +65,7 @@ export default {
         height: 100%;
         color: white;
         main {
+          height: 100%;
           overflow: scroll;
           display: flex;
           flex-grow: 1;

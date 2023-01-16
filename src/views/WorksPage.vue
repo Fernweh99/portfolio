@@ -17,6 +17,8 @@ export default {
 
 <style lang="scss" scoped>
 #works {
+  overflow: scroll;
+  height: 100%;
   width: 100%;
   .container {
     padding-top: 80px;
