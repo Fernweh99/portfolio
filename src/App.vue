@@ -57,8 +57,10 @@ export default {
     }
   // Style main
     height: 100%;
+    overflow-x: hidden; ;
     body {
       height: 100%;
+      overflow-x: hidden; ;
       #app{
         display: flex;
         background-color: $primary-color ;
@@ -66,7 +68,8 @@ export default {
         color: white;
         main {
           height: 100%;
-          overflow: scroll;
+          overflow-x: hidden; ;
+          overflow-y: scroll;
           display: flex;
           flex-grow: 1;
           transition: transform 0.3s linear, filter 0.3s linear;
