@@ -87,7 +87,8 @@ import {educationDates, experienceDates, skillsDates, softSkillsDates, hobbiesDa
  
  <style lang="scss" scoped>
   #resume {
-    overflow: scroll;
+    overflow-x: hidden; ;
+    overflow-y: scroll;
     height: 100%;
     width: 100%;
     .container {

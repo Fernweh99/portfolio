@@ -17,7 +17,8 @@ export default {
 
 <style lang="scss" scoped>
 #works {
-  overflow: scroll;
+  overflow-x: hidden; ;
+  overflow-y: scroll;
   height: 100%;
   width: 100%;
   .container {
